@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 
 
     // Login and Homepage displays
-test.only('Logs In and Checks the Intranet is displayed', async ({ page }) => {
+test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     const intranetHomepage = new IntranetHomepage(page);
     await page.getByRole('textbox', { name: 'Enter your email, phone, or' }).fill(process.env.USERNAME || '');
     await page.getByRole('button', { name: 'Next' }).click();
