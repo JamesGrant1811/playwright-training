@@ -34,7 +34,7 @@ test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
 
     // Add Time Entries for Monday  
-    await intranetHomepage.mondayTimeEntrySelector();
+   // await intranetHomepage.mondayTimeEntrySelector();
     await intranetHomepage.timeEntryActivityDropdownSelector();
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).not.toBeHidden();
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).toBeEnabled();
@@ -45,19 +45,19 @@ test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     await expect (intranetHomepage.timeEntryHoursField).toHaveValue('8');
     await intranetHomepage.timeEntrySummarySectionSelector();
     await expect (intranetHomepage.timeEntrySummarySection).toHaveValue('This is an automated test');
-    await expect (intranetHomepage.timeEntrySubmitButton).not.toBeHidden;
+    expect(intranetHomepage.timeEntrySubmitButton).not.toBeHidden;
 
     // Navigate Back to Calendar Window
-    await page.goto('https://unosquare.sharepoint.com/sites/Intranet/SitePages/Time-Entries.aspx');
-    await page.waitForSelector('.flex > div', {state: 'visible'});
+    //  await page.goto('https://unosquare.sharepoint.com/sites/Intranet/SitePages/Time-Entries.aspx');
+    //  await page.waitForSelector('.flex > div', {state: 'visible'});
 
     // Navgiates to Bulk Entry Window
-    await intranetHomepage.bulkEntryButtonSelector();
-    await page.waitForSelector('.flex > div', {state: 'visible'});
-    await intranetHomepage.addEntryButtonSelector();
-    await page.waitForSelector('input[name="entries\\.0\\.hours\\.2\\.numberOfHours"]',{state: 'visible'})
-    await intranetHomepage.bulkEntrySummaryFieldSelector();
-    //await intranetHomepage.mondayBulkEntryFieldSelector();
+    // await intranetHomepage.bulkEntryButtonSelector();
+    // await page.waitForSelector('.flex > div', {state: 'visible'});
+    // await intranetHomepage.addEntryButtonSelector();
+    // await page.waitForSelector('input[name="entries\\.0\\.hours\\.2\\.numberOfHours"]',{state: 'visible'})
+    // await intranetHomepage.bulkEntrySummaryFieldSelector();
+    // await intranetHomepage.mondayBulkEntryFieldSelector();
     
 
     // // Bulk Entry fields

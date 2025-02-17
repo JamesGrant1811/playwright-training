@@ -44,11 +44,11 @@ class intranetHomepage {
     this.timeEntriesHeader = page.getByRole('heading', { name: 'Time Entries' });
     this.loggedHoursWindow = page.locator('.flex > div').first();
     //Day Selectors Locators
-    this.mondayTimeEntry = page.getByText('03 0 hrsYou need to enter 8');
-    this.tuesdayTimeEntry = page.getByText('04 0 hrsYou need to enter 8');
-    this.wednesdayTimeEntry = page.getByText('05 0 hrsYou need to enter 8');
-    this.thursdayTimeEntry = page.getByText('06 0 hrsYou need to enter 8'); 
-    this.fridayTimeEntry = page.getByText('07 0 hrsYou need to enter 8');
+   //  this.mondayTimeEntry = page.getByText('17 0 hrsYou need to enter 8');
+   //  this.tuesdayTimeEntry = page.getByText('18 0 hrsYou need to enter 8');
+   //  this.wednesdayTimeEntry = page.getByText('19 0 hrsYou need to enter 8');
+   //  this.thursdayTimeEntry = page.getByText('20 0 hrsYou need to enter 8'); 
+   //  this.fridayTimeEntry = page.getByText('21 0 hrsYou need to enter 8');
     
     // Add Time Entry Window fields
     this.timeEntryIssueDropdown = page.locator('.css-qbdosj-Input').first();
@@ -60,18 +60,18 @@ class intranetHomepage {
     this.timeEntryHoursField = page.getByRole('spinbutton');
     this.timeEntrySummarySection = page.locator('textarea[name="comments"]');
     this.timeEntrySubmitButton = page.getByRole('button', { name: 'Submit' });
-    this.timeEntryBackButton = page.locator('div').filter({ hasText: /^February 03 2025Onovative - Core IQ$/ }).locator('path');
+   // this.timeEntryBackButton = page.locator('div').filter({ hasText: /^February 03 2025Onovative - Core IQ$/ }).locator('path');
     //Bulk Entry Window Fields 
-    this.bulkEntryButton = page.getByRole('button', { name: 'Bulk Entry' });
-    this.addEntryButton = page.getByRole('button', { name: 'Add Entry' });
-    this.deleteEntryIcon = page.getByRole('row').filter({ hasText: /^$/ }).locator('svg');
-    this.bulkEntrySummaryField = page.getByRole('textbox');
-    this.mondayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.2\\.numberOfHours"]');
-    this.tuesdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.3\\.numberOfHours"]');
-    this.wednesdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.4\\.numberOfHours"]');
-    this.thursdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.5\\.numberOfHours"]');
-    this.fridayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.6\\.numberOfHours"]');
-    }
+   //  this.bulkEntryButton = page.getByRole('button', { name: 'Bulk Entry' });
+   //  this.addEntryButton = page.getByRole('button', { name: 'Add Entry' });
+   //  this.deleteEntryIcon = page.getByRole('row').filter({ hasText: /^$/ }).locator('svg');
+   //  this.bulkEntrySummaryField = page.getByRole('textbox');
+   //  this.mondayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.2\\.numberOfHours"]');
+   //  this.tuesdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.3\\.numberOfHours"]');
+   //  this.wednesdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.4\\.numberOfHours"]');
+   //  this.thursdayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.5\\.numberOfHours"]');
+   //  this.fridayBulkEntryField =  page.locator('input[name="entries\\.0\\.hours\\.6\\.numberOfHours"]');
+     }
 
     //Homepage Navigation Menu
     async myResourcesDropdownMenu (){
