@@ -34,7 +34,8 @@ test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
 
     // Add Time Entries for Monday  
-   // await intranetHomepage.mondayTimeEntrySelector();
+    await intranetHomepage.timeEntryProjectDropdownBenchOption();
+    //await intranetHomepage.timeEntryIssueDropdownSelector();
     await intranetHomepage.timeEntryActivityDropdownSelector();
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).not.toBeHidden();
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).toBeEnabled();

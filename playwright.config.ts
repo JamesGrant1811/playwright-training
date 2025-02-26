@@ -52,22 +52,22 @@ export default defineConfig({
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices['Desktop Chrome']},
+         fullyParallel: true,
          //Use prepared auth state.
     //    storageState: 'e2e/tests/auth.setup.ts',
       },
     //  dependencies: ['setup'],
-    },
 
     {
       name: 'firefox',
       use: {
-        ...devices['Desktop Firefox'],
+        ...devices['Desktop Firefox']},
+        fullyParallel: true,
         // Use prepared auth state.
    //     storageState: 'e2e/tests/auth.setup.ts',
       },
    //   dependencies: ['setup'],
-    },
 
 
 

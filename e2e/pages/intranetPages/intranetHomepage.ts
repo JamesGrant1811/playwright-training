@@ -15,6 +15,8 @@ class intranetHomepage {
     wednesdayTimeEntry: Locator;
     thursdayTimeEntry: Locator;
     fridayTimeEntry: Locator;
+    timeEntryProjectDropdown: Locator;
+    timeEntryProjectBenchOption: Locator;
     timeEntryIssueDropdown: Locator;
     timeEntryActivityDropdown: Locator;
     timeEntrySummarySection: Locator;
@@ -33,7 +35,7 @@ class intranetHomepage {
     fridayBulkEntryField: Locator;
     bulkEntrySummaryField: Locator;
 
-    
+
     constructor (page: Page){
     this.page = page;
     //Homepage Navigation Menu Locators
@@ -51,7 +53,9 @@ class intranetHomepage {
    //  this.fridayTimeEntry = page.getByText('21 0 hrsYou need to enter 8');
     
     // Add Time Entry Window fields
-    this.timeEntryIssueDropdown = page.locator('.css-qbdosj-Input').first();
+    this.timeEntryProjectDropdown = page.locator('.css-qbdosj-Input').first();
+    this.timeEntryProjectBenchOption = page.getByText('Unosquare - Bench', { exact: true });
+    this.timeEntryIssueDropdown = page.locator('div:nth-child(8) > .css-5rcvev-control > .css-vc0zja-ValueContainer');
     this.timeEntryActivityDropdown = page.locator('div:nth-child(5) > .css-5rcvev-control');
    // this.timeEntryActivityDropdown = page.locator('.css-13rjlh4-placeholder', { hasText: 'Select...' });;
    // this.timeEntryActivityDropdown = page.locator('*').allInnerTexts();
@@ -106,9 +110,19 @@ class intranetHomepage {
      }
 
     // Add Time Entry Window fields
+      async timeEntryProjectDropdownBenchOption (){
+         this.timeEntryProjectDropdown.click();
+         this.timeEntryProjectDropdown.hover();
+         this.timeEntryProjectBenchOption.click({ force: true });
+      }
+
     async timeEntryIssueDropdownSelector (){
-        this.timeEntryIssueDropdown.click();
+      this.timeEntryIssueDropdown.click();
+      this.timeEntryIssueDropdown.hover();
+      this.timeEntryIssueDropdown.fill('67332 - James Grant QA Center of Excellence Activities');
+      this.timeEntryIssueDropdown.getByText('67332 - James Grant QA Center of Excellence Activities', { exact: true }).click({ force: true });
      }
+
      async timeEntryActivityDropdownSelector (){
       console.log(this.timeEntryActivityDropdown);
         this.timeEntryActivityDropdown.click();
