@@ -1,37 +1,50 @@
 name: Test Project
 on: 
+  push:
+   branches:
+    - master
+    - develop
   pull_request:
-    types:
-      - opened
-  workflow_dispatch: 
-jobs: 
+   branches:
+    - master
+    - develop
+  workflow_dispatch:  # Allows manual trigger
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
       - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm test
-  deploy: 
+        run: npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run ui tests
+        run: npx playwright test e2e/tests/ui
+      - name: Run api tests
+        run: npx playwright test e2e/tests/api
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
       - name: Install dependencies
         run: npm ci
-      - name: Run tests
-        run: npm test
-      - name: Build Project
-        run: npm run build
+      - name: Runs all tests
+        run: npx playwright test 
       - name: Deploy
         run: echo "Deploying ..."
+      - name: 📸 Upload Test Report (on Failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/

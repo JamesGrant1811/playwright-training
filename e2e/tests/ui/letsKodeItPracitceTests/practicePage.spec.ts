@@ -1,4 +1,4 @@
-import ElementPracticePage from "../../pages/letsKodeItPracticePages/elementPracticePage";
+import ElementPracticePage from "../../../pages/letsKodeItPracticePages/elementPracticePage.ts";
 import { test, expect } from '@playwright/test';
 
 test.beforeEach('Checks Practice Title', async ({ page }) => {
