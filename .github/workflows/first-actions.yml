@@ -25,6 +25,15 @@ on:
           default: true
           type: boolean    
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Lint code
+        run: npm run lint
   test:
     runs-on: ubuntu-latest
     env:
@@ -38,10 +47,45 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
+        run: npm install   
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run ui tests
         run: npx playwright test e2e/tests/ui
       - name: Run api tests
         run: npx playwright test e2e/tests/api
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test.json   
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: dist
+  deploy: 
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls -R
+      - name: Deploy
+        run: echo "Deploying..."
