@@ -9,6 +9,21 @@ on:
     - master
     - develop
   workflow_dispatch:
+    inputs:
+      testType:
+        description: 'Select test type (all, ui, api)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ui
+          - api
+      headless:
+          description: 'Run in headless mode?'
+          required: false
+          default: true
+          type: boolean    
 jobs:
   test:
     runs-on: ubuntu-latest

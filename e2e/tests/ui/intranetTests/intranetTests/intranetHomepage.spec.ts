@@ -30,38 +30,20 @@ test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     await page.waitForURL('https://unosquare.sharepoint.com/sites/Intranet/SitePages/Time-Entries.aspx');
     await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
     await page.waitForSelector('.flex > div', {state: 'visible'});
-    //await page.waitForLoadState('domcontentloaded');
     await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
 
     // Add Time Entries for Monday  
     await intranetHomepage.timeEntryProjectDropdownBenchOption();
-    //await intranetHomepage.timeEntryIssueDropdownSelector();
-    await intranetHomepage.timeEntryActivityDropdownSelector();
+    await intranetHomepage.timeEntryIssueDropdownSelector('81931 - James Grant COE Activities');
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).not.toBeHidden();
     await expect (intranetHomepage.timeEntryActivityDropdownMeeting).toBeEnabled();
     await intranetHomepage.timeEntryActivityDropdownMeetingOption();
     await intranetHomepage.timeEntryDateMenuSelector();
-    //await expect (intranetHomepage.timeEntryActivityDropdown).toHaveValue('Meeting');
     await intranetHomepage.timeEntryHoursSelector();
     await expect (intranetHomepage.timeEntryHoursField).toHaveValue('8');
     await intranetHomepage.timeEntrySummarySectionSelector();
     await expect (intranetHomepage.timeEntrySummarySection).toHaveValue('This is an automated test');
     expect(intranetHomepage.timeEntrySubmitButton).not.toBeHidden;
-
-    // Navigate Back to Calendar Window
-    //  await page.goto('https://unosquare.sharepoint.com/sites/Intranet/SitePages/Time-Entries.aspx');
-    //  await page.waitForSelector('.flex > div', {state: 'visible'});
-
-    // Navgiates to Bulk Entry Window
-    // await intranetHomepage.bulkEntryButtonSelector();
-    // await page.waitForSelector('.flex > div', {state: 'visible'});
-    // await intranetHomepage.addEntryButtonSelector();
-    // await page.waitForSelector('input[name="entries\\.0\\.hours\\.2\\.numberOfHours"]',{state: 'visible'})
-    // await intranetHomepage.bulkEntrySummaryFieldSelector();
-    // await intranetHomepage.mondayBulkEntryFieldSelector();
-    
-
-    // // Bulk Entry fields
 
 
     })
