@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .js,.ts,.tsx,.mjs",
     "test:all": "npx playwright test",
     "test:ui": "npx playwright test e2e/tests/ui",
     "test:api": "npx playwright test e2e/tests/api",
-    "build": "tsc"
+    "build": "tsc && vite build"
   },
   "keywords": [],
   "author": "",
