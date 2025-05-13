@@ -39,14 +39,20 @@ class intranetHomepage {
     this.timeEntriesHeader = page.getByRole('heading', { name: 'Time Entries' });
     this.loggedHoursModel = page.locator('.flex > div').first();
     // Add Time Entry Window fields
-    this.timeEntryProjectDropdown = page.locator('.css-qbdosj-Input').first();
+    this.timeEntryProjectDropdown = page.locator('.css-19qhxzm-control > .css-vc0zja-ValueContainer');
     this.timeEntryProjectBenchOption = page.getByText('Unosquare - Bench', { exact: true });
-    this.timeEntryIssueDropdown = page.locator('div:nth-child(8) > .css-5rcvev-control > .css-vc0zja-ValueContainer');
+    //Issue Fields
+    this.timeEntryIssueDropdown = page.locator('form > div > .css-5rcvev-control > .css-vc0zja-ValueContainer').first();
+    //Activity Fields
     this.timeEntryActivityDropdown = page.locator('div:nth-child(5) > .css-5rcvev-control');
     this.timeEntryActivityDropdownMeeting = page.locator('text=Meeting');
+   //Date Fields
     this.timeEntryDateMenu = page.locator('input[name="applicableDate"]');
+   //Hours Fields
     this.timeEntryHoursField = page.getByRole('spinbutton');
+   //Summary Section Fields
     this.timeEntrySummarySection = page.locator('textarea[name="comments"]');
+   //Submit Button
     this.timeEntrySubmitButton = page.getByRole('button', { name: 'Submit' });
    }
 
@@ -71,23 +77,22 @@ class intranetHomepage {
       }
       
     // Add Time Entry Window fields
-      async timeEntryProjectDropdownBenchOption (){
-         this.timeEntryProjectDropdown.click();
-         this.timeEntryProjectDropdown.hover();
-         this.timeEntryProjectBenchOption.click({ force: true });
-      }
+         async timeEntryProjectDropdownBenchOption (){
+            this.timeEntryProjectDropdown.click();
+            this.timeEntryProjectDropdown.hover();
+            this.timeEntryProjectBenchOption.click();
+         }
 
-     async timeEntryIssueDropdownSelector (timeEntryIssueText){
-      this.timeEntryIssueDropdown.click();
-      this.timeEntryIssueDropdown.hover();
-      this.timeEntryIssueDropdown.fill(timeEntryIssueText);
-      this.timeEntryIssueDropdown.getByText(timeEntryIssueText, { exact: true }).click({ force: true });
-      }
+         async timeEntryIssueDropdownSelector (timeEntryIssueText){
+            this.timeEntryIssueDropdown.click();
+            await this.timeEntryIssueDropdown.fill(timeEntryIssueText);
+            await this.timeEntryIssueDropdown.getByText(timeEntryIssueText, { exact: true }).click();
+         }
       
-     async timeEntryActivityDropdownSelector (){
+   async timeEntryActivityDropdownSelector (){
       console.log(this.timeEntryActivityDropdown);
-        this.timeEntryActivityDropdown.click();
-     }
+          this.timeEntryActivityDropdown.click();
+   }
      async timeEntryActivityDropdownMeetingOption (){
          this.timeEntryActivityDropdown.click();
          this.timeEntryActivityDropdown.hover();

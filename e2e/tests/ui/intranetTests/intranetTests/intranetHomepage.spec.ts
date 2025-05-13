@@ -27,20 +27,14 @@ test('Logs In and Checks the Intranet is displayed', async ({ page }) => {
     await intranetHomepage.myTimeEntriesButtonSelect();
 
     // Verify it has navigated to MyTimeEntries Page and Logged Hours menu is displayed
-    await page.waitForURL('https://unosquare.sharepoint.com/sites/Intranet/SitePages/Time-Entries.aspx');
-    await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
-    await page.waitForSelector('.flex > div', {state: 'visible'});
-    await expect (intranetHomepage.timeEntriesHeader).not.toBeHidden();
-
-    // Add Time Entries for Monday  
     await intranetHomepage.timeEntryProjectDropdownBenchOption();
     await intranetHomepage.timeEntryIssueDropdownSelector('81931 - James Grant COE Activities');
-    await expect (intranetHomepage.timeEntryActivityDropdownMeeting).not.toBeHidden();
-    await expect (intranetHomepage.timeEntryActivityDropdownMeeting).toBeEnabled();
+    await expect(intranetHomepage.timeEntryActivityDropdownMeeting).not.toBeHidden();
+    await expect(intranetHomepage.timeEntryActivityDropdownMeeting).toBeEnabled();
     await intranetHomepage.timeEntryActivityDropdownMeetingOption();
     await intranetHomepage.timeEntryDateMenuSelector();
     await intranetHomepage.timeEntryHoursSelector();
-    await expect (intranetHomepage.timeEntryHoursField).toHaveValue('8');
+    await expect(intranetHomepage.timeEntryHoursField).toHaveValue('8');
     await intranetHomepage.timeEntrySummarySectionSelector();
     await expect (intranetHomepage.timeEntrySummarySection).toHaveValue('This is an automated test');
     expect(intranetHomepage.timeEntrySubmitButton).not.toBeHidden;

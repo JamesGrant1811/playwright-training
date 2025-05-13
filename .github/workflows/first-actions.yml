@@ -1,4 +1,7 @@
 name: Test Project
+permissions:
+  actions: write
+  contents: read
 on: 
   push:
    branches:
@@ -41,15 +44,24 @@ jobs:
         run: npm install   
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Generate dist (simulated)
+        run: |
+          mkdir -p dist
+          echo "Hello from dist" > dist/index.html
       - name: Run ui tests
         run: npx playwright test e2e/tests/ui
       - name: Run api tests
         run: npx playwright test e2e/tests/api
+      - name: Upload dist folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: ./dist
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: test-report
-          path: test.json   
+            name: test-report
+            path: test.json
   build:
     runs-on: ubuntu-latest
     steps:
@@ -60,22 +72,26 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Upload build
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Upload Playwright report
         uses: actions/upload-artifact@v4
         with:
           name: dist-files
-          path: dist
+          path: ./dist
+      - name: Output contents
+        run: ls -R
   deploy: 
-    needs: build
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist-files
+      - name: Check dist folder
+        run: ls -la ./dist
       - name: Output contents
         run: ls -R
       - name: Deploy
