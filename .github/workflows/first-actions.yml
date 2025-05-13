@@ -49,7 +49,7 @@ jobs:
           mkdir -p dist
           echo "Hello from dist" > dist/index.html
       - name: Run ui tests
-        run: npx playwright test /e2e/tests/ui/letsKodeItPracitceTests
+        run: npx playwright test e2e/tests/ui/letsKodeItPracitceTests
       - name: Run api tests
         run: npx playwright test e2e/tests/api
       - name: Upload dist folder
@@ -90,6 +90,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-files
+          path: ./dist
       - name: Check dist folder
         run: ls -la ./dist
       - name: Output contents
