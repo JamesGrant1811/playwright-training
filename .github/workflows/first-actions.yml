@@ -44,21 +44,20 @@ jobs:
         run: npm install   
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Generate dist (simulated)
-        run: |
-          mkdir -p dist
-          echo "Hello from dist" > dist/index.html
       - name: Run ui tests
         run: npx playwright test e2e/tests/ui/letsKodeItPracitceTests
       - name: Run api tests
         run: npx playwright test e2e/tests/api
-      - name: Upload dist folder
+      - name: Upload playwright report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: dist-files
-          path: ./dist
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
       - name: Upload test report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
             name: test-report
             path: test.json
@@ -75,24 +74,17 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Upload dist folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-files
-          path: ./dist
-      - name: Output contents
-        run: ls -R
   deploy: 
-    needs: [test, build]
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: dist-files
-          path: ./dist
+          name: playwright-report
+          path: playwright-report/
       - name: Check dist folder
-        run: ls -la ./dist
+        run: ls playwright-report/
       - name: Output contents
         run: ls -R
       - name: Deploy
