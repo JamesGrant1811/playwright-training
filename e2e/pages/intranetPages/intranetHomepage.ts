@@ -27,6 +27,7 @@ class intranetHomepage {
     fridayBulkEntryField: Locator;
     bulkEntrySummaryField: Locator;
     dayTimeEntry: any;
+   timeEntryIssueDropdownIssue: Locator;
 
 
     constructor (page: Page){
@@ -39,10 +40,11 @@ class intranetHomepage {
     this.timeEntriesHeader = page.getByRole('heading', { name: 'Time Entries' });
     this.loggedHoursModel = page.locator('.flex > div').first();
     // Add Time Entry Window fields
-    this.timeEntryProjectDropdown = page.locator('.css-19qhxzm-control > .css-vc0zja-ValueContainer');
-    this.timeEntryProjectBenchOption = page.getByText('Unosquare - Bench', { exact: true });
+    this.timeEntryProjectDropdown = page.locator('#currentProject svg');
+    this.timeEntryProjectBenchOption = page.locator('text=Unosquare - Bench');
     //Issue Fields
-    this.timeEntryIssueDropdown = page.locator('form > div > .css-5rcvev-control > .css-vc0zja-ValueContainer').first();
+    this.timeEntryIssueDropdown = page.locator('.css-5rcvev-control').first();
+   // this.timeEntryIssueDropdownIssue.selectOption('81931 - James Grant COE Activities');
     //Activity Fields
     this.timeEntryActivityDropdown = page.locator('div:nth-child(5) > .css-5rcvev-control');
     this.timeEntryActivityDropdownMeeting = page.locator('text=Meeting');
@@ -80,13 +82,13 @@ class intranetHomepage {
          async timeEntryProjectDropdownBenchOption (){
             this.timeEntryProjectDropdown.click();
             this.timeEntryProjectDropdown.hover();
-            this.timeEntryProjectBenchOption.click();
+            await this.timeEntryProjectBenchOption.click();
          }
 
          async timeEntryIssueDropdownSelector (timeEntryIssueText){
-            this.timeEntryIssueDropdown.click();
+            await this.timeEntryIssueDropdown.click();
             await this.timeEntryIssueDropdown.fill(timeEntryIssueText);
-            await this.timeEntryIssueDropdown.getByText(timeEntryIssueText, { exact: true }).click();
+            await this.timeEntryIssueDropdown.selectOption(timeEntryIssueText);
          }
       
    async timeEntryActivityDropdownSelector (){

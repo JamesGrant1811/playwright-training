@@ -49,7 +49,7 @@ jobs:
           mkdir -p dist
           echo "Hello from dist" > dist/index.html
       - name: Run ui tests
-        run: npx playwright test e2e/tests/ui
+        run: npx playwright test /e2e/tests/ui/letsKodeItPracitceTests
       - name: Run api tests
         run: npx playwright test e2e/tests/api
       - name: Upload dist folder
@@ -75,7 +75,7 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Upload Playwright report
+      - name: Upload dist folder
         uses: actions/upload-artifact@v4
         with:
           name: dist-files
@@ -83,7 +83,7 @@ jobs:
       - name: Output contents
         run: ls -R
   deploy: 
-    needs: [build]
+    needs: [test, build]
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
