@@ -103,7 +103,7 @@ jobs:
       - name: Authenticate Postman CLI
         run: postman login ${{secrets.POSTMAN_API_KEY}}
       - name: Run Postman collection
-        run:
+        run: |
           mkdir -p postman-reports
           postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a" 
           --reporters cli,html \
