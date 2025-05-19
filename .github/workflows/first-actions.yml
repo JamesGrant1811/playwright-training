@@ -106,7 +106,7 @@ jobs:
       - name: Run Postman collection
         run: |
           mkdir -p postman-reports
-          postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a" 
+          postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a"  \
           --reporters cli,html \
           --reporter-html-export postman/reports
       - name: Upload Postman CLI report
