@@ -104,10 +104,9 @@ jobs:
       - name: Run Postman collection
         run:
           postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a" 
-          //  --integration-id github-actions
       - name: Upload Postman CLI report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: postman-cli-report
-          path: .postman/reports
+          path: .postman/reports/
