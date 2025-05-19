@@ -1,4 +1,4 @@
-import IntranetHomepage from "../../../../pages/intranetPages/intranetHomepage";
+import IntranetHomepage from "../../e2e/pages/intranetPages/intranetHomepage";
 import dotenv from 'dotenv'
 import { test, expect} from '@playwright/test';
 
