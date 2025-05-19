@@ -109,4 +109,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: postman-cli-report
-          path: .postman/reports/postman-report.html
+          path: postman-report.html
