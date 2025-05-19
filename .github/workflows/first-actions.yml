@@ -91,19 +91,23 @@ jobs:
       - name: Deploy
         run: echo "Deploying..."
   run-postman-tests:
+    needs : [test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install Postman CLI
-        run:
+        run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
           echo "$HOME/.postman/bin" >> $GITHUB_PATH
       - name: Authenticate Postman CLI
         run: postman login --with-api-key ${{secrets.POSTMAN_API_KEY}}
       - name: Run Postman collection
         run:
+          mkdir -p postman-reports
           postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a" 
+          --reporters cli,html \
+          --reporter-html-export postman-reports/postman-report.html
       - name: Upload Postman CLI report
         if: always()
         uses: actions/upload-artifact@v4
