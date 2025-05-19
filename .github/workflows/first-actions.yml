@@ -100,8 +100,9 @@ jobs:
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
           echo "$HOME/.postman/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.postman/bin:$PATH"
       - name: Authenticate Postman CLI
-        run: postman login --with-api-key ${{secrets.POSTMAN_API_KEY}}
+        run: postman login --with-api-key "${{ secrets.POSTMAN_API_KEY }}"
       - name: Run Postman collection
         run: |
           mkdir -p postman-reports
