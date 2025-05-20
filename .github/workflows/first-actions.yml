@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: test-summary
-            path: test-results.json 
+            path: .playwright-report/
   build:
     needs: [test]
     runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ jobs:
         run: postman login --with-api-key "${{ secrets.POSTMAN_API_KEY }}"
       - name: Run Postman collection
         run: |
-          mkdir -p postman-reports
+          mkdir -p ./postman/reports/
           postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a"  \
           --reporters cli,html \
           --reporter-html-export postman/reports
@@ -114,4 +114,23 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: postman-cli-report
-          path: postman-report.html
+          path: ./postman/reports/postman-report.html
+
+  newman-tests:
+    needs : [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Newman Collection
+        run: |
+          mkdir -p newman-reports
+          newman run postman/NewTests.postman_collection.json \
+            --reporters cli,html \
+            --reporter-html-export newman-reports/report.html
