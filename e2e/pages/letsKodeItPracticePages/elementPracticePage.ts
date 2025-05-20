@@ -73,21 +73,21 @@ constructor (page: Page){
     }
 
     //Enable/Disable Field
-    async disableButtonSelect(){
+    async selectDisablebutton(){
         await this.disableButton.click();
     }
-    async enableButtonSelect(){
+    async selectEnableButton(){
         await this.enableButton.click();
     }
-    async enabledDisabledFieldSelect(){
+    async selectEnabledDisabledField(){
         await this.enabledDisabledField.fill('This is an enabled field');
     }
 
     //Element Displayed Example
-    async hideElementButtonSelect(){
+    async selectHideElementButton(){
         await this.hideElementButton.click();
     }
-    async showElementButtonSelect(){
+    async selectShowElementButton(){
         await this.showElementButton.click();
     }
     async hideShowButtonExampleField(){

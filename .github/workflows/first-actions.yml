@@ -1,0 +1,136 @@
+name: Test Project
+permissions:
+  actions: write
+  contents: read
+on: 
+  push:
+   branches:
+    - master
+    - develop
+  pull_request:
+   branches:
+    - master
+    - develop
+  workflow_dispatch:
+    inputs:
+      testType:
+        description: 'Select test type (all, ui, api)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ui
+          - api
+      headless:
+          description: 'Run in headless mode?'
+          required: false
+          default: true
+          type: boolean    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD}}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install   
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run ui tests
+        run: npx playwright test e2e/tests/ui/letsKodeItPracitceTests
+      - name: Run api tests
+        run: npx playwright test e2e/tests/api
+      - name: Upload playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+      - name: Upload JSON test summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+            name: test-summary
+            path: .playwright-report/
+  build:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+  deploy: 
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+      - name: Check playwright folder
+        run: ls playwright-report/
+      - name: Output contents
+        run: ls -R
+      - name: Deploy
+        run: echo "Deploying..."
+  run-postman-tests:
+    needs : [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+          echo "$HOME/.postman/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.postman/bin:$PATH"
+      - name: Authenticate Postman CLI
+        run: postman login --with-api-key "${{ secrets.POSTMAN_API_KEY }}"
+      - name: Run Postman collection
+        run: |
+          mkdir -p ./postman/reports/
+          postman collection run "17046200-4f50b3bd-fad4-49f6-8e98-cb9e8da3892a"  \
+          --reporters cli,html \
+          --reporter-html-export postman/reports
+      - name: Upload Postman CLI report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-cli-report
+          path: ./postman/reports/postman-report.html
+
+  newman-tests:
+    needs : [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Newman
+        run: npm install -g newman
+      - name: Run Newman Collection
+        run: |
+          mkdir -p newman-reports
+          newman run postman/NewTests.postman_collection.json \
+            --reporters cli,html \
+            --reporter-html-export newman-reports/report.html

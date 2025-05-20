@@ -6,12 +6,10 @@ class intranetHomepage {
     
     constructor (page: Page){
     this.page = page;
-   // this.myTimeEntriesTitle = page.getByRole('link', { name: 'My Resources' });
 
     }
     
     async myResourcesDropdownMenu (){
- //       await this.navMenuMyResources.hover();
       }
 
     }

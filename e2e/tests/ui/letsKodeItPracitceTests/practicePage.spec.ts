@@ -1,4 +1,4 @@
-import ElementPracticePage from "../../pages/letsKodeItPracticePages/elementPracticePage";
+import ElementPracticePage from "../../../pages/letsKodeItPracticePages/elementPracticePage.ts";
 import { test, expect } from '@playwright/test';
 
 test.beforeEach('Checks Practice Title', async ({ page }) => {
@@ -35,28 +35,26 @@ test('Selects Benz Button Examples', async ({ page }) => {
   test('Multi Select Example Tests', async ({ page }) => {
     const elementPracticepage = new ElementPracticePage(page);
     //Selects Apple and Peach Options
-   /* await elementPracticepage.appleMultiSelector();
-    await elementPracticepage.peachMultiSelector();*/
     await elementPracticepage.multiSelectorArray();
     await expect (elementPracticepage.mutiSelectExample).toHaveValues([/apple/, /peach/]);
  })
  
  test('Enabled/Disabled Fields Test', async ({ page }) => {
    const elementPracticepage = new ElementPracticePage(page);
-    await elementPracticepage.disableButtonSelect();
+    await elementPracticepage.selectDisablebutton();
     await expect (elementPracticepage.enabledDisabledField).toBeDisabled();
-    await elementPracticepage.enableButtonSelect();
+    await elementPracticepage.selectEnableButton();
     await expect (elementPracticepage.enabledDisabledField).not.toBeDisabled();
-    await elementPracticepage.enabledDisabledFieldSelect();
+    await elementPracticepage.selectEnabledDisabledField();
     await expect (elementPracticepage.enabledDisabledField).toBeEditable();
 
  })
  
 test('Displayed Elements Test', async ({ page }) => {
   const elementPracticepage = new ElementPracticePage(page);
-    await elementPracticepage.hideElementButtonSelect();
+    await elementPracticepage.selectHideElementButton();
     await expect (elementPracticepage.hideShowExampleField).toBeHidden();
-    await elementPracticepage.showElementButtonSelect();
+    await elementPracticepage.selectShowElementButton();
     await expect (elementPracticepage.hideShowExampleField).not.toBeHidden();
 
 

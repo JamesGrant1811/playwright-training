@@ -1,4 +1,4 @@
-import HomePage from "../../pages/letsKodeItPracticePages/homePage";
+import HomePage from "../../../pages/letsKodeItPracticePages/homePage";
 import { test, expect } from '@playwright/test';
 
 
